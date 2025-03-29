@@ -1,10 +1,38 @@
-const express = require('express');
-const app = express();
+const express = require('express');//Importar express como Clase
+const app = express(); //lamar el constructor de express
+const morgan = require('morgan');
+const conductores = require('./routes/conductores.js');
+/*const contenedores = require('./routes/contenedores.js');
+const estados_formulario = require('./routes/estados_formulario.js');
+const formularios = require('./routes/formularios.js');
+const lecturas = require('./routes/lecturas.js');
+const rutas-contenedores = require('./routes/rutas-contenedores.js');
+const rutas = require('./routes/rutas.js');
+const sensores = require('./routes/sensores.js');
+const tareas = require('./routes/tareas.js');*/
 
-app.get('/', (req, res) => {
-  res.send('Hello World');
+
+app.use(morgan('dev'));
+app.use(express.json());
+app.use(express.urlencoded({extended : true}));
+
+app.get("/", (req, res, next) => {
+  return res.status(200).json({code : 1, message : "Bienvenido a ClearRoute"});
 });
 
-app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000');
+app.use("/conductores", conductores);
+/*app.use("/contenedores", contenedores);
+app.use("/estados_formulario", estados_formulario);
+app.use("/formularios", formularios);
+app.use("/lecturas", lecturas);
+app.use("/rutas-contenedores", rutas-contenedores);
+app.use("/rutas", rutas);
+app.use("/sensores", sensores);
+app.use("/tareas", tareas);*/
+
+app.use((req , res, next) => {
+  return res.status(404).json({code : 404, message : "URL no encontrada"});
 });
+
+app.listen(process.env.PORT || 3000, () => {
+  console.log('Server is running...')});
