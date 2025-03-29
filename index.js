@@ -8,10 +8,9 @@ const formularios = require('./routes/formularios.js');
 const lecturas = require('./routes/lecturas.js');
 const rutasContenedores = require('./routes/rutas_contenedores.js');
 const rutas = require('./routes/rutas.js');
-
+const rutasOptimizadas = require('./routes/rutas_optimizadas.js');
 const sensores = require('./routes/sensores.js');
 const tareas = require('./routes/tareas.js');
-
 
 app.use(morgan('dev'));
 app.use(express.json());
@@ -30,6 +29,7 @@ app.use("/rutas_contenedores", rutasContenedores);
 app.use("/rutas", rutas);
 app.use("/sensores", sensores);
 app.use("/tareas", tareas);
+app.use("/rutas_optimizadas", rutasOptimizadas);
 
 app.use((req , res, next) => {
   return res.status(404).json({code : 404, message : "URL no encontrada"});
